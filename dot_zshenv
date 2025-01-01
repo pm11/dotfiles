@@ -1,0 +1,23 @@
+export LANG=ja_JP.UTF-8
+export LC_ALL=en_US.UTF-8
+
+export TERM=screen-256color
+export CLICOLOR=1
+
+
+export HISTFILE=~/.zsh_history
+export HISTSIZE=1000000
+export SAVEHIST=1000000
+
+# ignore global /etc/zprofile
+unsetopt GLOBAL_RCS
+# copied from /etc/zprofile
+# system-wide environment settings for zsh(1)
+if [ -x /usr/libexec/path_helper ]; then
+    eval `/usr/libexec/path_helper -s`
+fi
+
+# Ensure that a non-login, non-interactive shell has a defined environment.
+if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprofile"
+fi
