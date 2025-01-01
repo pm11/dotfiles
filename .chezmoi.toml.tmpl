@@ -1,3 +1,23 @@
+{{ $email := promptStringOnce . "email" "What is your email address" -}}
+{{ $name := promptStringOnce . "name" "What is your name" -}}
+{{ $signingKey := promptStringOnce . "signingKey" "What is your signingKey" -}}
+{{ $github_user := promptStringOnce . "github_user" "What is your github user" -}}
+{{ $github_token := promptStringOnce . "github_token" "What is your github token" -}}
+
+{{- if or (eq $email "") (eq $name "") (eq $signingKey "") (eq $github_user "") (eq $github_token "") }}
+	{{- writeToStdout "email, name, signingKey, github_user, and github_token are required.\n" -}}
+	{{- exit 1 }}
+{{- end }}
+
+
+encryption = "gpg"
+
 [edit]
-    command = "code"
-    args = ["--wait"]
+    command = "cursor --wait --new-window"
+
+[data]
+    email = {{ $email | quote }}
+    name = {{ $name | quote }}
+    signingKey = {{ $signingKey | quote }}
+    github_user = {{ $github_user | quote }}
+    github_token = {{ $github_token | quote }}

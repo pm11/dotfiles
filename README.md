@@ -2,9 +2,17 @@
 
 ## Requirements
 
+- Homebrew
 - [chezmoi](https://www.chezmoi.io/)
 
 ```
-# for macOS
 brew install chezmoi
+```
+
+## Setup
+
+dotfiles
+
+```
+chezmoi init $GITHUB_USER_NAME
 ```
