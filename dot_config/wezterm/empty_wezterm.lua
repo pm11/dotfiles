@@ -2,46 +2,67 @@ local wezterm = require 'wezterm'
 
 local config = wezterm.config_builder()
 
--- https://wezfurlong.org/wezterm/colorschemes/index.html
-config.color_scheme = 'tokyonight'
+config.automatically_reload_config = true
 
+-- https://wezfurlong.org/wezterm/colorschemes/index.html
+config.color_scheme = 'Poimandres Storm'
 config.use_ime = true
 config.macos_forward_to_ime_modifier_mask = "SHIFT|CTRL"
 
-config.colors = {
-	selection_bg = "#CCCC33",
-	selection_fg = "#111111",
-	cursor_bg = "#00FF00",
-	cursor_fg = "#000000",
-	cursor_border = "#00FF00",
-	scrollbar_thumb = "#AAAAAA",
-	compose_cursor = 'silver',
-}
-
 -- config.default_cursor_style = 'BlinkingBlock'
-config.cursor_blink_rate = 500
+config.cursor_blink_rate = 400
 config.cursor_blink_ease_in = "Constant"
 config.cursor_blink_ease_out = "Constant"
 
 config.enable_scroll_bar = true
 
 config.font = wezterm.font_with_fallback {
-	'Fira Code',
+	'Roboto Mono for Powerline',
 	'Hiragino Kaku Gothic Pro',
 	'Noto Sans JP',
 }
-config.font_size = 16.0
+config.font_size = 18.0
 config.command_palette_font_size = 18.0
-config.command_palette_bg_color = '#4D07FF'
+config.window_background_opacity = 0.85
+config.macos_window_background_blur = 20
 
--- https://alexplescan.com/posts/2024/08/10/wezterm/
-
--- config.window_decorations = 'RESIZE'
-
+config.window_decorations = 'RESIZE'
 config.window_frame = {
-	font = wezterm.font({ family = 'Fira Code', weight = 'Regular' }),
-	font_size = 16,
+	font = wezterm.font({ family = 'Roboto Mono for Powerline', weight = 'Medium' }),
+	font_size = 18.0,
+  active_titlebar_bg = "none",
 }
+config.window_background_gradient = {
+  colors = { "#000000" },
+}
+config.show_tab_index_in_tab_bar = false
+config.show_new_tab_button_in_tab_bar = false
+
+local SOLID_LEFT_ARROW = wezterm.nerdfonts.ple_lower_right_triangle
+local SOLID_RIGHT_ARROW = wezterm.nerdfonts.ple_upper_left_triangle
+
+wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
+  local background = "#5c6d74"
+  local foreground = "#FFFFFF"
+  local edge_background = "none"
+  if tab.is_active then
+    background = "#ae8b2d"
+    foreground = "#FFFFFF"
+  end
+  local edge_foreground = background
+  local title = "   " .. wezterm.truncate_right(tab.active_pane.title, max_width - 1) .. "   "
+  return {
+    { Background = { Color = edge_background } },
+    { Foreground = { Color = edge_foreground } },
+    { Text = SOLID_LEFT_ARROW },
+    { Background = { Color = background } },
+    { Foreground = { Color = foreground } },
+    { Text = title },
+    { Background = { Color = edge_background } },
+    { Foreground = { Color = edge_foreground } },
+    { Text = SOLID_RIGHT_ARROW },
+  }
+end)
 
 wezterm.on('update-status', function(window)
 	local SOLID_LEFT_ARROW = utf8.char(0xe0b2)
