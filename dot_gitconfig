@@ -1,6 +1,6 @@
 [core]
     pager = lv -c
-    editor = "code --wait --new-window"
+    editor = "vim"
     autocrlf = input
     preliadindex = true
 
