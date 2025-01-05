@@ -45,3 +45,4 @@ run_once_install-packages.sh の内容
 | sheldon         | Zshプラグインマネージャー             | [Sheldon](https://github.com/rossmacarthur/sheldon)            | Zshプラグインの効率的な管理が可能                |
 | wezterm         | ターミナルエミュレータ                | [WezTerm](https://wezfurlong.org/wezterm/)                     | 高機能で設定可能なターミナル環境を提供           |
 | proto           | パッケージマネージャ                  | [proto](https://moonrepo.dev/proto)                            | 言語ランタイムとツールチェーンの管理が可能       |
+| navi            | インタラクティブなチートシート         | [navi](https://github.com/denisidoro/navi)                     | コマンドの使い方をインタラクティブに確認可能     |

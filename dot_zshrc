@@ -149,3 +149,16 @@ eval "$(sheldon source)"
 # fzf
 source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# asdf
+. "$(brew --prefix asdf)/libexec/asdf.sh" 
+
+# direnv
+eval "$(direnv hook zsh)"
+
+# navi
+eval "$(navi widget zsh)"
+
+# Google Cloud SDK.
+# if [ -f '$HOME/.config/google-cloud-sdk/path.zsh.inc' ]; then . '$HOME/.config/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '$HOME/.config/google-cloud-sdk/completion.zsh.inc' ]; then . '$HOME/.config/google-cloud-sdk/completion.zsh.inc'; fi
