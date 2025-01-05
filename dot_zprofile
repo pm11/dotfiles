@@ -9,17 +9,22 @@ fi
 #
 # Paths
 #
+NAVI_PATH="$(navi info cheats-path)"
 
 # Ensure path arrays do not contain duplicates.
 typeset -gU cdpath fpath mailpath path
 
 typeset -gxU path PATH
+
+# project 直下の cheats を読み込むため、.cheats を追加
 path=(
   $HOME/google-cloud-sdk/bin
   $HOME/.volta/bin
   $HOME/.asdf/shims
   ${0:A:h}
   $HOME/Library/pnpm
+  .cheats
+  $NAVI_PATH
   /opt/homebrew/bin(N-/)
   /opt/homebrew/sbin(N-/)
   /usr/bin
@@ -30,13 +35,3 @@ path=(
   /usr/local/sbin(N-/)
   /Library/Apple/usr/bin
 )
-
-# asdf
-. "$(brew --prefix asdf)/libexec/asdf.sh" 
-
-# direnv
-eval "$(direnv hook zsh)"
-
-# Google Cloud SDK.
-# if [ -f '$HOME/.config/google-cloud-sdk/path.zsh.inc' ]; then . '$HOME/.config/google-cloud-sdk/path.zsh.inc'; fi
-if [ -f '$HOME/.config/google-cloud-sdk/completion.zsh.inc' ]; then . '$HOME/.config/google-cloud-sdk/completion.zsh.inc'; fi
