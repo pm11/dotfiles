@@ -56,6 +56,7 @@ font-fira-code
 sheldon
 wezterm
 proto
+navi
 EOF
 
 for package in `echo $PACKAGES`; do
