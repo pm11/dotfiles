@@ -21,6 +21,7 @@ path=(
   $HOME/google-cloud-sdk/bin
   $HOME/.volta/bin
   $HOME/.asdf/shims
+  /opt/homebrew/opt/asdf/libexec/bin
   ${0:A:h}
   $HOME/Library/pnpm
   .cheats
