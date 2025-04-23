@@ -5,6 +5,8 @@
 # Homebrew tap
 brew tap moonrepo/proto https://github.com/moonrepo/proto
 
+brew install --cask nikitabobko/tap/aerospace
+
 # Homebrew
 # See. ./docs/packages.md
 
