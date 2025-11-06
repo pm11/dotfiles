@@ -11,7 +11,6 @@ brew install --cask nikitabobko/tap/aerospace
 # See. ./docs/packages.md
 
 read -r -d '' PACKAGES <<EOF
-asdf
 awscli
 coreutils
 diffutils
@@ -59,6 +58,7 @@ sheldon
 wezterm
 proto
 navi
+mise
 EOF
 
 for package in `echo $PACKAGES`; do

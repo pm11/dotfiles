@@ -146,6 +146,9 @@ function tfi() {
 # sheldon
 eval "$(sheldon source)"
 
+# mise
+eval "$(mise activate zsh)"
+
 # fzf
 source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
