@@ -153,10 +153,6 @@ eval "$(mise activate zsh)"
 source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# asdf
-# 内容は dot_zprofile に記載
-# . "$(brew --prefix asdf)/libexec/asdf.sh" 
-
 # direnv
 eval "$(direnv hook zsh)"
 
