@@ -162,3 +162,14 @@ eval "$(navi widget zsh)"
 # Google Cloud SDK.
 # if [ -f '$HOME/.config/google-cloud-sdk/path.zsh.inc' ]; then . '$HOME/.config/google-cloud-sdk/path.zsh.inc'; fi
 if [ -f '$HOME/.config/google-cloud-sdk/completion.zsh.inc' ]; then . '$HOME/.config/google-cloud-sdk/completion.zsh.inc'; fi
+
+# pnpm
+export PNPM_HOME="$HOME/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# talos
+export TALOSCONFIG="$HOME/.talos/config"
