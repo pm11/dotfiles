@@ -4,7 +4,6 @@ run_once_install-packages.sh の内容
 
 | パッケージ名      | 説明                                | 公式リンク                                                     | 用途                                           |
 |------------------|-------------------------------------|----------------------------------------------------------------|------------------------------------------------|
-| asdf            | 複数の言語やツールのバージョン管理ツール | [asdf](https://asdf-vm.com/)                                  | 複数の言語やツールのバージョンを簡単に切り替えられる |
 | awscli          | AWSのコマンドラインインターフェース    | [AWS CLI](https://aws.amazon.com/cli/)                         | AWSリソースをターミナルから操作可能               |
 | coreutils       | GNU基本コマンドライン・ユーティリティ  | [GNU Coreutils](https://www.gnu.org/software/coreutils/)       | macOSデフォルトのコマンドよりも機能が豊富        |
 | diffutils       | ファイル比較ユーティリティ            | [GNU Diffutils](https://www.gnu.org/software/diffutils/)       | より高度なファイル比較が可能                     |
