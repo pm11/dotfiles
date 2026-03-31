@@ -10,6 +10,9 @@ brew install --cask nikitabobko/tap/aerospace
 brew tap manaflow-ai/cmux
 brew install --cask cmux
 
+# Claude Code
+curl -fsSL https://claude.ai/install.sh | bash
+
 # Homebrew
 # See. ./docs/packages.md
 

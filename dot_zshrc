@@ -3,7 +3,7 @@ bindkey -e
 #
 # Alias
 #
-alias c="code"
+alias c="claude"
 alias dc="docker compose"
 alias g="git"
 alias k="kubectl"

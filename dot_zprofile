@@ -18,6 +18,7 @@ typeset -gxU path PATH
 
 # project 直下の cheats を読み込むため、.cheats を追加
 path=(
+  $HOME/.local/bin
   $HOME/google-cloud-sdk/bin
   $HOME/.volta/bin
   ${0:A:h}
