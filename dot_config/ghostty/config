@@ -1,0 +1,11 @@
+# Theme (matches WezTerm's Poimandres Storm)
+theme = poimandres-storm
+
+# Font
+font-family = Roboto Mono for Powerline
+font-family = Hiragino Kaku Gothic Pro
+font-family = Noto Sans JP
+font-size = 18
+
+# Background transparency
+background-opacity = 0.85

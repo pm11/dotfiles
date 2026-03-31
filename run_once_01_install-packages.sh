@@ -7,6 +7,9 @@ brew tap moonrepo/proto https://github.com/moonrepo/proto
 
 brew install --cask nikitabobko/tap/aerospace
 
+brew tap manaflow-ai/cmux
+brew install --cask cmux
+
 # Homebrew
 # See. ./docs/packages.md
 
