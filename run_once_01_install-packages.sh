@@ -16,60 +16,23 @@ curl -fsSL https://claude.ai/install.sh | bash
 # Homebrew
 # See. ./docs/packages.md
 
-read -r -d '' PACKAGES <<EOF
-awscli
-coreutils
-diffutils
-ed
-findutils
-gawk
-gnu-sed
-gnu-tar
-grep
-gzip
-parallel
-tree
-curl
-wget
-zip
-unzip
-xz
-pandoc
-jq
-yq
-lv
-fd
-gh
-ghq
-gpg
-git
-git-secrets
-k6
-k9s
-kubectx
-kubernetes-cli
-stern
-tmux
-vim
-fzf
-skeema
-zsh
-pnpm
-ripgrep
-stripe
-ripgrep
-1password-cli
-font-fira-code
-sheldon
-wezterm
-proto
-navi
-mise
-EOF
+PACKAGES=(
+  awscli coreutils diffutils ed findutils gawk gnu-sed gnu-tar grep gzip
+  parallel tree curl wget zip unzip xz pandoc jq yq lv fd gh ghq gpg git
+  git-secrets k6 k9s kubectx kubernetes-cli stern tmux vim fzf skeema zsh
+  pnpm ripgrep stripe 1password-cli font-fira-code sheldon wezterm proto navi mise
+)
 
-for package in `echo $PACKAGES`; do
-  HOMEBREW_NO_AUTO_UPDATE=1 brew install $package
+# 未インストールのものだけ抽出して一括インストール
+INSTALLED=$(brew list --formula -1 2>/dev/null)
+TO_INSTALL=()
+for pkg in "${PACKAGES[@]}"; do
+  echo "$INSTALLED" | grep -qx "$pkg" || TO_INSTALL+=("$pkg")
 done
+
+if [ ${#TO_INSTALL[@]} -gt 0 ]; then
+  HOMEBREW_NO_AUTO_UPDATE=1 brew install "${TO_INSTALL[@]}"
+fi
 {{ end }}
 
 # tmux
