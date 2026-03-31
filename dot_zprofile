@@ -9,7 +9,6 @@ fi
 #
 # Paths
 #
-NAVI_PATH="$(navi info cheats-path)"
 
 # Ensure path arrays do not contain duplicates.
 typeset -gU cdpath fpath mailpath path
@@ -18,12 +17,11 @@ typeset -gxU path PATH
 
 # project 直下の cheats を読み込むため、.cheats を追加
 path=(
+  $HOME/.local/bin
   $HOME/google-cloud-sdk/bin
   $HOME/.volta/bin
   ${0:A:h}
   $HOME/Library/pnpm
-  .cheats
-  $NAVI_PATH
   /opt/homebrew/bin(N-/)
   /opt/homebrew/sbin(N-/)
   /usr/bin
@@ -34,3 +32,6 @@ path=(
   /usr/local/sbin(N-/)
   /Library/Apple/usr/bin
 )
+
+# navi cheats path (requires /opt/homebrew/bin in PATH)
+path+=("$(navi info cheats-path 2>/dev/null)" .cheats)

@@ -3,7 +3,7 @@ bindkey -e
 #
 # Alias
 #
-alias c="code"
+alias c="claude"
 alias dc="docker compose"
 alias g="git"
 alias k="kubectl"
@@ -20,6 +20,7 @@ alias vi="vim"
 alias tf="tftarget"
 alias tfm="terraform"
 alias pn="pnpm"
+alias gtr="git gtr"
 
 #cdを省略（ディレクトリ名のみで実行される）
 setopt auto_cd
@@ -156,6 +157,10 @@ source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
 # direnv
 eval "$(direnv hook zsh)"
 
+# go
+export GOPATH=$(go env GOPATH)
+export GOTMPDIR=$HOME/.local/share/go-tmp
+
 # navi
 eval "$(navi widget zsh)"
 
@@ -173,3 +178,17 @@ esac
 
 # talos
 export TALOSCONFIG="$HOME/.talos/config"
+
+# ghq
+export GHQ_ROOT="$HOME/ghq"
+ghq() {
+  if [ $# -eq 0 ]; then
+    local repo_path
+    repo_path=$(ghq list | fzf --height 40% --reverse)
+    if [[ -n "$repo_path" ]]; then
+      cd "$(ghq root)/$repo_path"
+    fi
+  else
+    command ghq "$@"
+  fi
+}
