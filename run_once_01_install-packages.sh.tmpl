@@ -4,8 +4,16 @@
 
 # Homebrew tap
 brew tap moonrepo/proto https://github.com/moonrepo/proto
+brew tap rjyo/moshi
+# Homebrew 6 は未信頼 tap の formula を読み込まない
+brew trust --formula rjyo/moshi/moshi-hook
 
 brew install --cask nikitabobko/tap/aerospace
+# 既存の Tailscale.app があると入れ替えで再起動がかかり、旧版の削除に sudo も要求される。
+# cask 管理外の手動インストール分も拾うため、アプリの実体と Caskroom の両方を見る。
+if [ ! -d /Applications/Tailscale.app ] && ! brew list --cask tailscale-app >/dev/null 2>&1; then
+  brew install --cask tailscale-app
+fi
 
 brew tap manaflow-ai/cmux
 brew install --cask cmux
@@ -21,6 +29,7 @@ PACKAGES=(
   parallel tree curl wget zip unzip xz pandoc jq yq lv fd gh ghq gpg git
   git-secrets k6 k9s kubectx kubernetes-cli stern tmux vim fzf skeema zsh
   pnpm ripgrep stripe 1password-cli font-fira-code sheldon wezterm proto navi mise
+  mosh tailscale herdr moshi-hook bun
 )
 
 # 未インストールのものだけ抽出して一括インストール
@@ -32,6 +41,11 @@ done
 
 if [ ${#TO_INSTALL[@]} -gt 0 ]; then
   HOMEBREW_NO_AUTO_UPDATE=1 brew install "${TO_INSTALL[@]}"
+fi
+
+# herdr plugin
+if command -v herdr >/dev/null 2>&1; then
+  herdr plugin install rjyo/herdr-window-title-sync --yes
 fi
 {{ end }}
 

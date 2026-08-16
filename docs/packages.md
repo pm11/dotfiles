@@ -1,6 +1,6 @@
 ## 導入している package
 
-run_once_install-packages.sh の内容
+run_once_01_install-packages.sh.tmpl の `PACKAGES` 配列の内容。
 
 | パッケージ名      | 説明                                | 公式リンク                                                     | 用途                                           |
 |------------------|-------------------------------------|----------------------------------------------------------------|------------------------------------------------|
@@ -45,3 +45,64 @@ run_once_install-packages.sh の内容
 | wezterm         | ターミナルエミュレータ                | [WezTerm](https://wezfurlong.org/wezterm/)                     | 高機能で設定可能なターミナル環境を提供           |
 | proto           | パッケージマネージャ                  | [proto](https://moonrepo.dev/proto)                            | 言語ランタイムとツールチェーンの管理が可能       |
 | navi            | インタラクティブなチートシート         | [navi](https://github.com/denisidoro/navi)                     | コマンドの使い方をインタラクティブに確認可能     |
+| mosh            | 遠隔ターミナルアプリケーション         | [Mosh](https://mosh.org/)                                      | 回線断や IP 変更をまたいで SSH 接続を維持可能    |
+| tailscale       | WireGuard ベースのメッシュ VPN         | [Tailscale](https://tailscale.com/)                            | 端末間を専用ネットワークで直接接続可能           |
+| herdr           | エージェント向けターミナル多重化ツール  | [herdr](https://herdr.dev/)                                    | コーディングエージェントのセッションを常駐管理可能 |
+| moshi-hook      | Moshi 連携デーモン                     | [Moshi](https://getmoshi.app/docs/hooks)                       | エージェントの承認要求と状態を iOS アプリへ通知   |
+| bun             | JavaScript ランタイム                  | [Bun](https://bun.sh/)                                         | herdr のプラグインを含む JS ツールの実行に必要    |
+
+## cask で導入している package
+
+| パッケージ名   | 説明                              | 公式リンク                                                      | 用途                                             |
+|---------------|-----------------------------------|-----------------------------------------------------------------|--------------------------------------------------|
+| aerospace     | i3 ライクなタイル型ウィンドウマネージャ | [AeroSpace](https://github.com/nikitabobko/AeroSpace)          | ウィンドウ配置をキーボードで操作可能               |
+| cmux          | AI エージェント向けターミナル        | [cmux](https://github.com/manaflow-ai/cmux)                     | 縦タブと通知でエージェントの並行作業を管理可能      |
+| tailscale-app | Tailscale の macOS アプリ           | [Tailscale](https://tailscale.com/)                             | メニューバーから接続とログインを操作可能           |
+
+## tap
+
+homebrew-core に無いものは tap を追加して導入する。
+
+- `moonrepo/proto`：proto
+- `rjyo/moshi`：moshi-hook
+- `nikitabobko/tap`：aerospace
+- `manaflow-ai/cmux`：cmux
+
+Homebrew 6 は tap trust を要求する。
+信頼していない tap の formula は読み込みを拒否され、`brew install` がそこで中断する。
+そのためスクリプトでは `brew trust --formula rjyo/moshi/moshi-hook` を tap 直後に実行している。
+
+## herdr のプラグイン
+
+`rjyo/herdr-window-title-sync` を導入し、フォーカス中のワークスペースとエージェントの状態を端末のウィンドウタイトルに反映させる。
+
+```bash
+herdr plugin install rjyo/herdr-window-title-sync --yes
+```
+
+`--yes` は stdin が対話的でないときに必要になる。
+このプラグインは各イベントで `bun sync-title.js` を起動するため、bun を `PACKAGES` に含めている。
+
+## インストール後に必要な操作
+
+tailscale と moshi-hook は常駐プロセスを伴うため、インストールしただけでは動かない。
+使う場合は brew services に登録する。
+
+```bash
+sudo brew services start tailscale  # tailscaled は root 権限を要求する
+brew services start moshi-hook
+```
+
+cask の tailscale-app は GUI から接続を管理し、formula の tailscale は CLI と tailscaled を提供する。
+GUI アプリで接続する運用なら tailscaled を常駐させる必要はなく、formula 側は `tailscale` コマンドの利用にとどめる。
+tailscale-app の入れ替えは動作中のアプリを終了させ、旧版の削除に sudo も要求する。
+そのためスクリプトでは `/Applications/Tailscale.app` と Caskroom の両方を確認し、どちらにも無いときだけ入れる。
+アプリの実体を見るのは、cask 管理外で手動インストールされている場合を拾うため。
+更新は `brew upgrade --cask tailscale-app` を対話的な端末から実行する。
+
+moshi-hook はペアリングと hook の導入を別途行う。
+
+```bash
+moshi-hook pair --token $MOSHI_PAIRING_TOKEN
+moshi-hook install
+```
